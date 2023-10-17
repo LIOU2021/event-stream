@@ -50,6 +50,7 @@ func main() {
 	authorized := router.Group("/", gin.BasicAuth(gin.Accounts{
 		"admin": "admin123", // username : admin, password : admin123
 	}))
+	// curl admin:admin123@localhost:9990/stream
 
 	// Authorized client can stream the event
 	// Add event-streaming headers
