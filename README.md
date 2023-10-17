@@ -1,6 +1,11 @@
 # tip
 - see http://localhost:9990/static/
-
+- cli連線方式
+    ```bash
+    curl admin:admin123@localhost:9990/stream
+    ```
+- 登出
+    - 訪問log:out@localhost:9990/static/
 # Ref
 - [gin官方範例](https://github.com/gin-gonic/examples/blob/master/server-sent-event/main.go)
 - [非同步 Server-Sent Event](https://openhome.cc/Gossip/ServletJSP/ServerSentEvent.html)

@@ -4,8 +4,11 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"math/rand"
+	"strconv"
 	"time"
 
+	"github.com/gin-contrib/sse"
 	"github.com/gin-gonic/gin"
 )
 
@@ -50,8 +53,6 @@ func main() {
 	authorized := router.Group("/", gin.BasicAuth(gin.Accounts{
 		"admin": "admin123", // username : admin, password : admin123
 	}))
-	// curl admin:admin123@localhost:9990/stream
-	// 登出 log:out@localhost:9990/static/
 
 	// Authorized client can stream the event
 	// Add event-streaming headers
@@ -67,7 +68,14 @@ func main() {
 		c.Stream(func(w io.Writer) bool {
 			// Stream message to client from message channel
 			if msg, ok := <-clientChan; ok {
-				c.SSEvent("message", msg)
+				// c.SSEvent("message", msg)
+
+				// 如果要帶ID的話，調用c.Render()接口
+				c.Render(200, sse.Event{
+					Event: "message",
+					Data:  msg,
+					Id:    strconv.Itoa(rand.Int()),
+				})
 				return true
 			}
 			return false
